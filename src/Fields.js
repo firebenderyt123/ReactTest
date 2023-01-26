@@ -1,179 +1,184 @@
-import { Component } from 'react';
+import { useState } from "react";
 import { motion } from "framer-motion";
 
 import { rebuildScene } from "./Scene";
-import { getParams } from "./Parameters";
+import { useParams } from "./Parameters";
 
-export class Fields extends Component {
-  state = {
-    isHover: false,
-    mins: {
-      objectCount: 1,
-      mass: 1
-    },
-    maxs: {
-      objectCount: 100,
-      mass: 99
-    },
-    steps: {
-      objectCount: 1,
-      mass: 1
-    },
-    lengths: {
-      objectCount: 3,
-      mass: 2
-    },
-    values: {
-      objectCount: 1,
-      mass: 1
-    },
-  };
+export const Fields = () => {
 
-  // componentDidMount() {
-  //   this.setState({
-  //     values: () => getParams()
-  //   });
-  //   console.log(this.state.values);
-  // }
-
-  onKeyDownEvent = {
+  const [params, setParams] = useParams();
+  const [isHover, setIsHover] = useState(false);
+  const [min, setMin] = useState({
+    objectCount: 1,
+    mass: 1
+  });
+  const [max, setMax] = useState({
+    objectCount: 100,
+    mass: 99
+  });
+  const [step, setStep] = useState({
+    objectCount: 1,
+    mass: 1
+  });
+  const [length, setLength] = useState({
+    objectCount: 3,
+    mass: 2
+  });
+  const [val, setVal] = useState({
+    objectCount: params.objectCount,
+    mass: params.mass
+  });
+  const [onKeyDownEvent, setOnKeyDownEvent] = useState({
     keyCode: -1
+  });
+  // const [state, setState] = useState({
+  //   isHover: false,
+  //   mins: {
+  //     objectCount: 1,
+  //     mass: 1
+  //   },
+  //   maxs: {
+  //     objectCount: 100,
+  //     mass: 99
+  //   },
+  //   steps: {
+  //     objectCount: 1,
+  //     mass: 1
+  //   },
+  //   lengths: {
+  //     objectCount: 3,
+  //     mass: 2
+  //   },
+  //   values: {
+  //     objectCount: params.objectCount,
+  //     mass: params.mass
+  //   }
+  // });
+
+  const setValue = (name, value) => {
+    setVal({
+      ...val,
+      [name]: parseInt(value)
+    });
+    setParams({
+      ...val,
+      [name]: parseInt(value)
+    });
+    // if (name == objectCount) {
+    //   window.refresh();
+    // }
   };
 
-  handleOnChange = event => {
-    
-    if (this.onKeyDownEvent.keyCode === 107 ||
-      this.onKeyDownEvent.keyCode === 109) {
-      this.onKeyDownEvent.keyCode = -1;
+  const handleOnChange = (event) => {
+
+    if (onKeyDownEvent.keyCode === 107 ||
+      onKeyDownEvent.keyCode === 109) {
+      setOnKeyDownEvent(-1);
       return;
     }
 
     const { name, value } = event.target;
-    const { mins, maxs, lengths } = this.state;
 
     let newVal = value;
 
     if (value === "")
         newVal = 0;
 
-    if (value <= maxs[name] &&
-      value >= mins[name] &&
-      value.length <= lengths[name]) {
-      this.setState({
-        values: {
-          ...this.state.values,
-          [name]: newVal
-        }
-      });
-      this.setValue(name, newVal);
+    if (value <= max[name] &&
+      value >= min[name] &&
+      value.length <= length[name]) {
+      setValue(name, newVal);
     }
+
   };
 
-  handleKeyDown = event => {
-    this.onKeyDownEvent = event;
+  const handleKeyDown = (event) => {
+
+    setOnKeyDownEvent(event);
 
     const { name, value } = event.target;
-    const { mins, maxs, lengths } = this.state;
 
     if (event.keyCode === 107) {
       // plus
-      if (value < maxs[name]) {
+      if (value < max[name]) {
         let newVal = parseInt(value) + 1;
-        this.setState({
-          values: {
-            ...this.state.values,
-            [name]: newVal
-          }
-        });
-        this.setValue(name, newVal);
+        setValue(name, newVal);
       }
     } else if (event.keyCode === 109) {
       // minus
-      if (value > mins[name]) {
+      if (value > min[name]) {
         let newVal = parseInt(value) - 1;
-        this.setState({
-          values: {
-            ...this.state.values,
-            [name]: newVal
-          }
-        });
-        this.setValue(name, newVal);
+        setValue(name, newVal);
       }
     }
+
   };
 
-  setValue(name, val) {
-    setParam(name, val);
-  }
-
-  render() {
-    const { mins, maxs, steps, lengths, values } = this.state;
-    return (
-      <div className="fields">
+  return (
+    <div className="fields">
+      <motion.div
+        whileHover={{ scale: 1.05 }}
+        className="field object-count-field"
+      >
+        <label>Objects Count</label>
+        <input
+          type="number"
+          name="objectCount"
+          className={
+            "object-count form-input"
+          }
+          min={ min.objectCount }
+          max={ max.objectCount }
+          step={ step.objectCount }
+          maxLength={ length.objectCount }
+          value={ val.objectCount }
+          onChange={ handleOnChange }
+          onKeyDown={ handleKeyDown }
+        />
+      </motion.div>
+      <motion.div
+        whileHover={{ scale: 1.05 }}
+        className="field mass-field"
+      >
+        <label>Mass</label>
+        <input
+          type="number"
+          name="mass"
+          className={
+            "mass form-input"
+          }
+          min={ min.mass }
+          max={ max.mass }
+          step={ step.mass }
+          maxLength={ length.mass }
+          value={ val.mass }
+          onChange={ handleOnChange }
+          onKeyDown={ handleKeyDown }
+        />
+      </motion.div>
+      <motion.div
+        whileHover={{ scale: 1.05 }}
+        className="field mass-field"
+      >
         <motion.div
-          whileHover={{ scale: 1.05 }}
-          className="field object-count-field"
+          className="submit btn"
+          onHoverStart={() => setIsHover(true)}
+          onHoverEnd={() => setIsHover(false)}
+          whileTap={{ scale: 0.8 }}
         >
-          <label>Objects Count</label>
-          <input
-            type="number"
-            name="objectCount"
-            className={
-              "object-count form-input"
-            }
-            min={ mins.objectCount }
-            max={ maxs.objectCount }
-            step={ steps.objectCount }
-            maxLength={ lengths.objectCount }
-            value={ values.objectCount }
-            onChange={ this.handleOnChange }
-            onKeyDown={ this.handleKeyDown }
-          />
-        </motion.div>
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          className="field mass-field"
-        >
-          <label>Mass</label>
-          <input
-            type="number"
-            name="mass"
-            className={
-              "mass form-input"
-            }
-            min={ mins.mass }
-            max={ maxs.mass }
-            step={ steps.mass }
-            maxLength={ lengths.mass }
-            value={ values.mass }
-            onChange={ this.handleOnChange }
-            onKeyDown={ this.handleKeyDown }
-          />
-        </motion.div>
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          className="field mass-field"
-        >
-          <motion.div
-            className="submit btn"
-            onHoverStart={() => this.setState({isHover: true})}
-            onHoverEnd={() => this.setState({isHover: false})}
-            whileTap={{ scale: 0.8 }}
+          <motion.a 
+            href="#"
+            animate={{
+              backgroundColor: isHover ? "#3cd458" : "#ffffff00",
+              color: isHover ? "#fff" : "#3cd458"
+            }}
+            transition={{duration: 0}}
+            onClick={() => rebuildScene()}
           >
-            <motion.a 
-              href="#"
-              animate={{
-                backgroundColor: this.state.isHover ? "#3cd458" : "#ffffff00",
-                color: this.state.isHover ? "#fff" : "#3cd458"
-              }}
-              transition={{duration: 0}}
-              onClick={() => rebuildScene() }
-            >
-              Apply
-            </motion.a>
-          </motion.div>
+            Apply
+          </motion.a>
         </motion.div>
-      </div>
-    );
-  }
+      </motion.div>
+    </div>
+  );
 };

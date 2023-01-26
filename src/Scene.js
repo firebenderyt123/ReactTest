@@ -4,16 +4,11 @@ import { App } from "./App";
 
 const root = createRoot(document.getElementById("root"));
 
-export const Scene = (props) => {
-  if (props == null) {
-    props = {
-      clumpProps: null
-    }
-  }
+export const Scene = () => {
   root.render(
     <>
       <Suspense fallback={null}>
-        <App {...props} />
+        <App />
       </Suspense>
     </>,
   );
@@ -25,7 +20,7 @@ export const removeScene = () => {
   }
 };
 
-export const rebuildScene = (props) => {
+export const rebuildScene = () => {
   // root.unmount();
-  Scene(props);
+  Scene();
 };

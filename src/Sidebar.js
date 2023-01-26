@@ -1,5 +1,5 @@
 import { SidebarHeader } from "./SidebarHeader";
-import { Fields } from "./TestFields";
+import { Fields } from "./Fields";
 
 export function Sidebar() {
   return (

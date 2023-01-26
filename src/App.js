@@ -1,7 +1,9 @@
 import { Heart } from "./Heart";
 import { getParams } from "./Parameters";
+import { getStorageValue } from "./LocalStorage";
 
 import * as THREE from "three";
+import { useRef } from "react";
 import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
 import { Physics, useSphere } from "@react-three/cannon";
 import {
@@ -23,7 +25,7 @@ const rfs = THREE.MathUtils.randFloatSpread;
 const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
 const baubleMaterial = new THREE.MeshStandardMaterial({ color: "red", roughness: 0, envMapIntensity: 0.2, emissive: "#370037" });
 
-export const App = (props) => {
+export const App = () => {
   return (
     <Canvas
       shadows
@@ -51,7 +53,7 @@ export const App = (props) => {
       />
       <Physics gravity={[0, 2, 0]} iterations={10}>
         <Pointer />
-        <Clump props={props.clumpProps} />
+        <Clump />
       </Physics>
       <Environment files="/adamsbridge.hdr" />
       <Effects />
@@ -60,14 +62,10 @@ export const App = (props) => {
   );
 };
 
-function Clump({ mat = new THREE.Matrix4(), vec = new THREE.Vector3(), props }) {
-  let params;
-  if (props == null)
-    params = getParams()[0];
-  else
-    params = props;
+function Clump({ mat = new THREE.Matrix4(), vec = new THREE.Vector3(), ...props }) {
+  const params = getParams();
   const texture = useTexture("/cross.jpg");
-  const [ref, api] = useSphere(() => ({ args: [1], mass: params.mass, angularDamping: 0.1, linearDamping: 0.65, position: [rfs(20), rfs(20), rfs(20)] }));
+  const [ref, api] = useSphere(() => ({ args: [1], mass: params.mass, angularDamping: 0.1, linearDamping: 0.65, position: [rfs(20), rfs(20), rfs(20)] }), useRef());
   useFrame((state) => {
     for (let i = 0; i < params.objectCount; i++) {
       // Get current whereabouts of the instanced sphere
