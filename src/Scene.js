@@ -1,8 +1,11 @@
-import { createRoot } from "react-dom/client";
+import { createRoot, unmount } from "react-dom/client";
 import { Suspense } from "react";
 import { App } from "./App";
 
-const root = createRoot(document.getElementById("root"));
+import { useThree } from "@react-three/fiber";
+
+const domRoot = document.getElementById("root");
+var root = createRoot(domRoot);
 
 export const Scene = () => {
   root.render(
@@ -14,13 +17,10 @@ export const Scene = () => {
   );
 };
 
-export const removeScene = () => {
-  while (root.firstChild) {
-    root.removeChild(root.lastChild);
+export const rebuildScene = (isNeedUnmount = false) => {
+  if (isNeedUnmount) {
+    root.unmount();
+    root = createRoot(domRoot);
   }
-};
-
-export const rebuildScene = () => {
-  // root.unmount();
   Scene();
 };

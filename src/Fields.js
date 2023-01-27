@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
 
 import { rebuildScene } from "./Scene";
 import { useParams } from "./Parameters";
+import { IntInput } from "./form/IntInput";
+import { Button } from "./form/Button";
 
 export const Fields = () => {
 
@@ -31,29 +32,8 @@ export const Fields = () => {
   const [onKeyDownEvent, setOnKeyDownEvent] = useState({
     keyCode: -1
   });
-  // const [state, setState] = useState({
-  //   isHover: false,
-  //   mins: {
-  //     objectCount: 1,
-  //     mass: 1
-  //   },
-  //   maxs: {
-  //     objectCount: 100,
-  //     mass: 99
-  //   },
-  //   steps: {
-  //     objectCount: 1,
-  //     mass: 1
-  //   },
-  //   lengths: {
-  //     objectCount: 3,
-  //     mass: 2
-  //   },
-  //   values: {
-  //     objectCount: params.objectCount,
-  //     mass: params.mass
-  //   }
-  // });
+
+  const [isNeedUnmount, setIsNeedUnmount] = useState(false);
 
   const setValue = (name, value) => {
     setVal({
@@ -64,9 +44,11 @@ export const Fields = () => {
       ...val,
       [name]: parseInt(value)
     });
-    // if (name == objectCount) {
-    //   window.refresh();
-    // }
+    if (name == "objectCount") {
+      setIsNeedUnmount(true);
+    } else {
+      setIsNeedUnmount(false);
+    }
   };
 
   const handleOnChange = (event) => {
@@ -116,69 +98,47 @@ export const Fields = () => {
 
   return (
     <div className="fields">
-      <motion.div
-        whileHover={{ scale: 1.05 }}
-        className="field object-count-field"
-      >
-        <label>Objects Count</label>
-        <input
-          type="number"
-          name="objectCount"
-          className={
-            "object-count form-input"
+      <IntInput
+        label="Objects Count"
+        name="objectCount"
+        min={ min.objectCount }
+        max={ max.objectCount }
+        step={ step.objectCount }
+        maxLength={ length.objectCount }
+        value={ val.objectCount }
+        onChange={ handleOnChange }
+        onKeyDown={ handleKeyDown }
+      />
+      <IntInput
+        label="Mass"
+        name="mass"
+        min={ min.mass }
+        max={ max.mass }
+        step={ step.mass }
+        maxLength={ length.mass }
+        value={ val.mass }
+        onChange={ handleOnChange }
+        onKeyDown={ handleKeyDown }
+      />
+      <Button
+        name="submit"
+        href="#"
+        text="Apply"
+        motions={{
+          animate: {
+            backgroundColor: isHover ? "#3cd458" : "#ffffff00",
+            color: isHover ? "#fff" : "#3cd458"
+          },
+          transition: {duration: 0},
+          onHoverStart: () => setIsHover(true),
+          onHoverEnd: () => setIsHover(false),
+          whileTap: { scale: 0.8 },
+          onClick: () => {
+            rebuildScene(isNeedUnmount);
+            setIsNeedUnmount(false);
           }
-          min={ min.objectCount }
-          max={ max.objectCount }
-          step={ step.objectCount }
-          maxLength={ length.objectCount }
-          value={ val.objectCount }
-          onChange={ handleOnChange }
-          onKeyDown={ handleKeyDown }
-        />
-      </motion.div>
-      <motion.div
-        whileHover={{ scale: 1.05 }}
-        className="field mass-field"
-      >
-        <label>Mass</label>
-        <input
-          type="number"
-          name="mass"
-          className={
-            "mass form-input"
-          }
-          min={ min.mass }
-          max={ max.mass }
-          step={ step.mass }
-          maxLength={ length.mass }
-          value={ val.mass }
-          onChange={ handleOnChange }
-          onKeyDown={ handleKeyDown }
-        />
-      </motion.div>
-      <motion.div
-        whileHover={{ scale: 1.05 }}
-        className="field mass-field"
-      >
-        <motion.div
-          className="submit btn"
-          onHoverStart={() => setIsHover(true)}
-          onHoverEnd={() => setIsHover(false)}
-          whileTap={{ scale: 0.8 }}
-        >
-          <motion.a 
-            href="#"
-            animate={{
-              backgroundColor: isHover ? "#3cd458" : "#ffffff00",
-              color: isHover ? "#fff" : "#3cd458"
-            }}
-            transition={{duration: 0}}
-            onClick={() => rebuildScene()}
-          >
-            Apply
-          </motion.a>
-        </motion.div>
-      </motion.div>
+        }}
+      />
     </div>
   );
 };

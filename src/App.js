@@ -1,13 +1,9 @@
-import { Heart } from "./Heart";
-import { getParams } from "./Parameters";
-import { getStorageValue } from "./LocalStorage";
+import { Clump } from "./models/Clump";
 
 import * as THREE from "three";
-import { useRef } from "react";
 import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
 import { Physics, useSphere } from "@react-three/cannon";
 import {
-  Sky,
   Environment,
   Effects as EffectComposer,
   useTexture,
@@ -16,14 +12,6 @@ import {
 import { SSAOPass } from "three-stdlib";
 
 extend({ SSAOPass });
-
-const heart = new Heart();
-const heartGemetry = heart.getGeometry();
-heart.setGeometryScale(0.015, 0.015, 0.015);
-
-const rfs = THREE.MathUtils.randFloatSpread;
-const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
-const baubleMaterial = new THREE.MeshStandardMaterial({ color: "red", roughness: 0, envMapIntensity: 0.2, emissive: "#370037" });
 
 export const App = () => {
   return (
@@ -57,37 +45,9 @@ export const App = () => {
       </Physics>
       <Environment files="/adamsbridge.hdr" />
       <Effects />
-      {/*<Sky />*/}
     </Canvas>
   );
 };
-
-function Clump({ mat = new THREE.Matrix4(), vec = new THREE.Vector3(), ...props }) {
-  const params = getParams();
-  const texture = useTexture("/cross.jpg");
-  const [ref, api] = useSphere(() => ({ args: [1], mass: params.mass, angularDamping: 0.1, linearDamping: 0.65, position: [rfs(20), rfs(20), rfs(20)] }), useRef());
-  useFrame((state) => {
-    for (let i = 0; i < params.objectCount; i++) {
-      // Get current whereabouts of the instanced sphere
-      ref.current.getMatrixAt(i, mat);
-      // Normalize the position and multiply by a negative force.
-      // This is enough to drive it towards the center-point.
-      api.at(i).applyForce(vec.setFromMatrixPosition(mat).normalize().multiplyScalar(-50).toArray(), [0, 0, 0]);
-      api.at(i).mass.set(params.mass);
-    }
-  });
-  return (
-    <instancedMesh
-      ref={ref}
-      castShadow
-      receiveShadow
-      args={[null, null, params.objectCount]}
-      geometry={sphereGeometry}
-      material={baubleMaterial}
-      material-map={texture}
-    />
-  );
-}
 
 function Pointer() {
   const viewport = useThree((state) => state.viewport);
@@ -102,10 +62,15 @@ function Pointer() {
 }
 
 function Effects(props) {
-  const { scene, camera } = useThree();
+  const { size, scene, camera } = useThree();
+  // const aspect = useMemo(
+  //   () => new THREE.Vector2(size.width, size.height),
+  //   [size]
+  // );
   return (
     <EffectComposer {...props}>
       <sSAOPass args={[scene, camera, 100, 100]} kernelRadius={0.665} kernelSize={0} />
+      {/*<unrealBloomPass attachArray="passes" args={[aspect, 0.4, 1, 0]} />*/}
     </EffectComposer>
   );
 }

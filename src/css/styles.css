@@ -1,6 +1,10 @@
 @import url("https://rsms.me/inter/inter.css");
 @import url("https://fonts.googleapis.com/css2?family=Antonio:wght@600&display=swap");
 
+:root {
+  --cursorColor: black;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -13,7 +17,24 @@ body,
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background: linear-gradient(180deg, #e6eaf5 0%, #f6f6f6 80%);
+  background: #11e8bb;
+  background: -moz-linear-gradient(top,  #11e8bb 0%, #8200c9 100%);
+  background: -webkit-linear-gradient(top,  #11e8bb 0%,#8200c9 100%);
+  background: linear-gradient(to bottom,  #11e8bb 0%,#8200c9 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#11e8bb', endColorstr='#8200c9',GradientType=0 );
+  transition: all cubic-bezier(0.4, 0, 0.2, 1) .2s;
+}
+
+#root canvas {
+/*  background: #fff;*/
+  cursor: default;
+  overflow: hidden;
+  width: 100%!important;
+  margin-left: 0!important;
+  transition: all cubic-bezier(0.4, 0, 0.2, 1) .2s;
+}
+#root.sidebar-opened canvas {
+  margin-left: 160px!important;
 }
 
 body {
@@ -21,8 +42,7 @@ body {
   overflow: hidden;
   overscroll-behavior-y: none;
   font-family: "Inter var", sans-serif;
-  cursor: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMwLjUgMTZDMzAuNSAyNC4wMDgxIDI0LjAwODEgMzAuNSAxNiAzMC41QzcuOTkxODcgMzAuNSAxLjUgMjQuMDA4MSAxLjUgMTZDMS41IDcuOTkxODcgNy45OTE4NyAxLjUgMTYgMS41QzI0LjAwODEgMS41IDMwLjUgNy45OTE4NyAzMC41IDE2WiIgc3Ryb2tlPSJibGFjayIvPgo8cGF0aCBkPSJNNiA5QzcuNjU2ODUgOSA5IDcuNjU2ODUgOSA2QzkgNC4zNDMxNSA3LjY1Njg1IDMgNiAzQzQuMzQzMTUgMyAzIDQuMzQzMTUgMyA2QzMgNy42NTY4NSA0LjM0MzE1IDkgNiA5WiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg=="),
-    auto;
+  cursor: default;
 }
 
 p {
@@ -38,19 +58,6 @@ a {
   text-decoration: none; /* no underline */
 }
 
-canvas {
-  background: #11e8bb;
-  background: -moz-linear-gradient(top,  #11e8bb 0%, #8200c9 100%);
-  background: -webkit-linear-gradient(top,  #11e8bb 0%,#8200c9 100%);
-  background: linear-gradient(to bottom,  #11e8bb 0%,#8200c9 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#11e8bb', endColorstr='#8200c9',GradientType=0 );
-  overflow: hidden;
-}
-
-.container {
-  cursor: default;
-}
-
 .btn > a {
   padding: 10px 15px;
   border: 1px solid #333;
@@ -59,7 +66,7 @@ canvas {
   background-color: transparent;
   text-align: center;
   cursor: pointer;
-  transition: all ease-in-out .2s;
+  transition: all cubic-bezier(0.4, 0, 0.2, 1) .2s;
 }
 
 .submit > a {
@@ -86,7 +93,7 @@ canvas {
   font-size: 24px;
   border: none;
   padding: 0.5em 0.5em 0.25em;
-  transition: all ease-in-out .2s;
+  transition: all cubic-bezier(0.4, 0, 0.2, 1) .2s;
 }
 .burger:hover {
   color: #FFC400;

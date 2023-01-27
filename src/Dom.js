@@ -25,9 +25,3 @@ export const Dom = () => {
     </>,
   );
 };
-
-export const removeDom = () => {
-  while (root.firstChild) {
-    root.removeChild(root.lastChild);
-  }
-};
