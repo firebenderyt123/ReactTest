@@ -1,0 +1,165 @@
+@import url("https://rsms.me/inter/inter.css");
+@import url("https://fonts.googleapis.com/css2?family=Antonio:wght@600&display=swap");
+
+:root {
+  --cursorColor: black;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #11e8bb;
+  background: -moz-linear-gradient(top,  #11e8bb 0%, #8200c9 100%);
+  background: -webkit-linear-gradient(top,  #11e8bb 0%,#8200c9 100%);
+  background: linear-gradient(to bottom,  #11e8bb 0%,#8200c9 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#11e8bb', endColorstr='#8200c9',GradientType=0 );
+  transition: all cubic-bezier(0.4, 0, 0.2, 1) .2s;
+}
+
+#root canvas {
+/*  background: #fff;*/
+  cursor: default;
+  overflow: hidden;
+  width: 100%!important;
+  margin-left: 0!important;
+  transition: all cubic-bezier(0.4, 0, 0.2, 1) .2s;
+}
+#root.sidebar-opened canvas {
+  margin-left: 160px!important;
+}
+
+body {
+  position: fixed;
+  overflow: hidden;
+  overscroll-behavior-y: none;
+  font-family: "Inter var", sans-serif;
+  cursor: default;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  padding-right: 10px;
+  cursor: pointer;
+  pointer-events: all;
+  color: black;
+  text-decoration: none; /* no underline */
+}
+
+.btn > a {
+  padding: 10px 15px;
+  border: 1px solid #333;
+  font-size: 16px;
+  border-radius: 3px;
+  background-color: transparent;
+  text-align: center;
+  cursor: pointer;
+  transition: all cubic-bezier(0.4, 0, 0.2, 1) .2s;
+}
+
+.submit > a {
+  border: 3px solid #3cd458;
+  background-color: transparent;
+  cursor: pointer;
+  font-weight: 700;
+  width: 70%;
+  margin: 0 15%;
+}
+.submit:hover > a {
+  box-shadow: 0px 0px 15px 0px #3cd458c0;
+}
+
+#burger {
+  top: 10px;
+  left: 12px;
+  z-index: 100;
+  cursor: pointer;
+  position: absolute;
+  font-size: 24px;
+}
+.burger {
+  font-size: 24px;
+  border: none;
+  padding: 0.5em 0.5em 0.25em;
+  transition: all cubic-bezier(0.4, 0, 0.2, 1) .2s;
+}
+.burger:hover {
+  color: #FFC400;
+  background-color: #fff;
+  border-radius: 25px;
+  box-shadow: 1px 1px 1px 1px #33333333;
+}
+
+#sidebar {
+  left: -320px;
+  width: 320px;
+  height: 100%;
+  background-color: #fff;
+  position: absolute;
+  z-index: 1;
+  transition: all cubic-bezier(0.4, 0, 0.2, 1) .2s;
+}
+#sidebar.opened {
+  left: 0;
+  box-shadow: -5px -5px 20px 0px #33333333;
+}
+#sidebar .header {
+  top: 0;
+  position: initial;
+  height: 70px;
+  width: 100%;
+  border-bottom: 1px solid #22222222;
+  box-shadow: 0px 5px 5px 0px #0000001a;
+}
+#sidebar .fields {
+  position: initial;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-direction: column;
+}
+#sidebar .btn {
+  position: initial;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-direction: column;
+}
+.field {
+  position: relative;
+  margin: 20px 20px 0 20px;
+}
+.field > label {
+  position: absolute;
+  top: -7px;
+  left: 8px;
+  padding: 0 2px;
+  background-color: #fff;
+  font-size: 12px;
+}
+.form-input {
+  width: 100%;
+  padding: 12px 10px;
+  transition: all cubic-bezier(0.4, 0, 0.2, 1) .2s;
+}
+
+@media screen and (max-width: 568px) {
+  .full {
+    visibility: hidden;
+    display: none;
+  }
+}
