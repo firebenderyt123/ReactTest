@@ -27,7 +27,8 @@ body,
 
 #root canvas {
 /*  background: #fff;*/
-  cursor: default;
+  cursor: url("data:image/webp;base64,UklGRiICAABXRUJQVlA4WAoAAAAYAAAAHwAAHwAAQUxQSBMBAAABgJtt27HnqX5ElW3s8qPWBDF3yJcyHQf4XWkT9WqND89xB6+qv44IBm4bKfIyH36CZknYua7UhsNa+WrbzNaHCylwZs9AtA87FTubnz+Lp2z0I1o3jMyBfBGHOfC1rs7eg/o6njxWV7f6+EuaiN6GyjcypA15fKhO9ewDvSPb3ZJdI0UGIYNLWRlxke+13bJ8oiSKsgZORRYAWKIz1GQDLIja/zqiBQxkfVnrX1O0hJ5p40XRMJlitcymXJludCHbdu1DvWPle6FP5PQKeCeFzT6edJ7RXVdeRoS9J03yOKS5zmtG/kixogC+Il0I92BnEucLC+fJrINuiPRh+U3xX7gfG4Z/zkWpOhhUixdbNEMCAQBWUDggJgAAANACAJ0BKiAAIAA+bTSWR6QjIiEoCACADYlpAAA9o6AA/vucwAAARVhJRroAAABFeGlmAABJSSoACAAAAAYAEgEDAAEAAAABAAAAGgEFAAEAAABWAAAAGwEFAAEAAABeAAAAKAEDAAEAAAACAAAAEwIDAAEAAAABAAAAaYcEAAEAAABmAAAAAAAAAEgAAAABAAAASAAAAAEAAAAGAACQBwAEAAAAMDIxMAGRBwAEAAAAAQIDAACgBwAEAAAAMDEwMAGgAwABAAAA//8AAAKgBAABAAAAIAAAAAOgBAABAAAAIAAAAAAAAAA="),
+    auto;
   overflow: hidden;
   width: 100%!important;
   margin-left: 0!important;
@@ -117,31 +118,59 @@ a {
 }
 #sidebar .header {
   top: 0;
-  position: initial;
+  position: relative;
   height: 70px;
   width: 100%;
   border-bottom: 1px solid #22222222;
   box-shadow: 0px 5px 5px 0px #0000001a;
+  z-index: 10;
 }
 #sidebar .fields {
-  position: initial;
+  position: relative;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-  flex-direction: column;
+  height: inherit;
+  overflow: hidden;
 }
 #sidebar .btn {
-  position: initial;
+  position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: stretch;
   flex-direction: column;
 }
+
+.accordion {
+  cursor: pointer;
+}
+.accordion h1,
+.accordion h2,
+.accordion h3,
+.accordion h4,
+.accordion h5,
+.accordion h6 {
+  color: #fff;
+  padding: 15px 20px;
+  line-height: 23px;
+  margin: 0;
+}
+#sidebar:not(.opened) .accordion h1,
+#sidebar:not(.opened) .accordion h2,
+#sidebar:not(.opened) .accordion h3,
+#sidebar:not(.opened) .accordion h4,
+#sidebar:not(.opened) .accordion h5,
+#sidebar:not(.opened) .accordion h6 {
+  box-shadow: none!important;
+}
+
+.inline-group {
+  display: flex;
+  flex-direction: row;
+}
+
 .field {
   position: relative;
-  margin: 20px 20px 0 20px;
+  margin: 20px 20px;
 }
 .field > label {
   position: absolute;

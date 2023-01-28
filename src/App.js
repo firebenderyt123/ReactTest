@@ -1,19 +1,21 @@
 import { Clump } from "./models/Clump";
+import { Pointer } from "./models/Pointer";
+import { getParams } from "./Parameters";
 
 import * as THREE from "three";
-import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
-import { Physics, useSphere } from "@react-three/cannon";
+import { Canvas, extend, useThree } from "@react-three/fiber";
+import { Physics } from "@react-three/cannon";
 import {
   Environment,
-  Effects as EffectComposer,
-  useTexture,
-  OrbitControls
+  Effects as EffectComposer
 } from "@react-three/drei";
 import { SSAOPass } from "three-stdlib";
 
 extend({ SSAOPass });
 
 export const App = () => {
+  const params = getParams();
+
   return (
     <Canvas
       shadows
@@ -39,27 +41,20 @@ export const App = () => {
         position={[-10, -10, -10]}
         color="purple"
       />
-      <Physics gravity={[0, 2, 0]} iterations={10}>
-        <Pointer />
-        <Clump />
+      <Physics
+        gravity={
+          [params.gravityX, params.gravityY, params.gravityZ]
+        }
+        iterations={10}
+      >
+        <Pointer radius={3} />
+        <Clump objectCount={params.objectCount} mass={params.mass} />
       </Physics>
       <Environment files="/adamsbridge.hdr" />
       <Effects />
     </Canvas>
   );
 };
-
-function Pointer() {
-  const viewport = useThree((state) => state.viewport);
-  const [, api] = useSphere(() => ({ type: "Kinematic", args: [3], position: [0, 0, 0] }));
-  return useFrame((state) => {
-    api.position.set(
-      (state.mouse.x * viewport.width) / 2,
-      (state.mouse.y * viewport.height) / 2,
-      0
-    );
-  });
-}
 
 function Effects(props) {
   const { size, scene, camera } = useThree();
