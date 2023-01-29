@@ -3,7 +3,7 @@ import { useSphere } from "@react-three/cannon";
 import { useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 
-import { Heart } from "./Heart";
+// import { Heart } from "./models/Heart";
 
 const rfs = THREE.MathUtils.randFloatSpread;
 const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);

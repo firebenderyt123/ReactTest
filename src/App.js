@@ -58,14 +58,9 @@ export const App = () => {
 
 function Effects(props) {
   const { size, scene, camera } = useThree();
-  // const aspect = useMemo(
-  //   () => new THREE.Vector2(size.width, size.height),
-  //   [size]
-  // );
   return (
     <EffectComposer {...props}>
       <sSAOPass args={[scene, camera, 100, 100]} kernelRadius={0.665} kernelSize={0} />
-      {/*<unrealBloomPass attachArray="passes" args={[aspect, 0.4, 1, 0]} />*/}
     </EffectComposer>
   );
 }
