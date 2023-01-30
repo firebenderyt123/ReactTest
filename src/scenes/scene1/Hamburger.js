@@ -4,15 +4,13 @@ import { motion } from "framer-motion";
 
 import { Sidebar } from "./Sidebar";
 
-export function HamburgerButton() {
+export default function HamburgerButton() {
   const [isShown, setIsShown] = useState(false);
   
   const handleClick = event => {
-    const root = document.getElementById('root');
     const sidebar = document.getElementById('sidebar');
     setIsShown(current => !current);
     sidebar.classList.toggle('opened');
-    root.classList.toggle('sidebar-opened');
   };
 
   const style = {

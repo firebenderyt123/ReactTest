@@ -1,9 +1,9 @@
 import * as THREE from "three";
-import { useRef } from "react";
+import { useRef, useMemo, useEffect } from "react";
 import { animated } from "@react-spring/three";
 
-export const Heart = ({material, ...props}) => {
-  const heartShape = new THREE.Shape();
+export const useHeart = ({material, ...props}) => {
+  const heartShape = useMemo(() => new THREE.Shape(), []);
 
   heartShape.moveTo(25, 25);
   heartShape.bezierCurveTo(25, 25, 20, 0, 0, 0);
@@ -23,14 +23,18 @@ export const Heart = ({material, ...props}) => {
     bevelThickness: 1
   };
 
-  const geometry = new THREE.ExtrudeGeometry(heartShape, extrudeSettings);
+  const geometry = useMemo(
+    () => new THREE.ExtrudeGeometry(heartShape, extrudeSettings), []
+  );
   if (material == undefined)
-    material = new THREE.MeshPhongMaterial();
-  const mesh = new THREE.Mesh(geometry, material);
+    material = useMemo(() => new THREE.MeshPhongMaterial(), [material]);
+  const mesh = useMemo(() => new THREE.Mesh(geometry, material), [geometry, material]);
 
   const ref = useRef(mesh);
 
-  geometry.center();
+  useEffect(() => {
+    geometry.center();
+  });
 
   return (
     <animated.mesh

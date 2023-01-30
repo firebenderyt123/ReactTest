@@ -1,11 +1,13 @@
 import { createRoot, unmount } from "react-dom/client";
-import { Suspense } from "react";
-import { App } from "../App";
+import { Suspense, lazy } from "react";
 
 import { useThree } from "@react-three/fiber";
 
-import { HamburgerButton } from "../Hamburger";
-import { Sidebar } from "../Sidebar";
+import { CircleLoader } from "../../loaders/CircleLoader";
+import HamburgerButton from "./Hamburger";
+import Sidebar from "./Sidebar";
+
+const App = lazy(() => import('./App'));
 
 const domRoot = document.getElementById("root");
 var root = createRoot(domRoot);
@@ -13,7 +15,7 @@ var root = createRoot(domRoot);
 const Scene = () => {
   root.render(
     <>
-      <Suspense fallback={null}>
+      <Suspense fallback={<CircleLoader />}>
         <App />
       </Suspense>
     </>,

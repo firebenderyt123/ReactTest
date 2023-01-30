@@ -1,30 +1,36 @@
-import { Clump } from "./models/Clump";
-import { Pointer } from "./models/Pointer";
+import { ClumpObj } from "./ClumpObj";
+import { Pointer } from "./Pointer";
 import { getParams } from "./Parameters";
+import { useStats } from "../../Stats";
 
 import * as THREE from "three";
 import { Canvas, extend, useThree } from "@react-three/fiber";
 import { Physics } from "@react-three/cannon";
-import {
-  Environment,
-  Effects as EffectComposer
-} from "@react-three/drei";
-import { SSAOPass } from "three-stdlib";
+import { Environment } from "@react-three/drei";
 
-extend({ SSAOPass });
+const Stats = () => useStats(0, true);
 
-export const App = () => {
+const App = () => {
   const params = getParams();
 
   return (
     <Canvas
       shadows
+      className="app"
+      frameloop="demand"
       dpr={[1, 2]}
       camera={{
         position: [0, 0, 20],
         fov: 35,
         near: 1,
         far: 40
+      }}
+      gl={{
+        powerPreference: "high-performance",
+        alpha: true,
+        antialias: true,
+        stencil: false,
+        depth: true
       }}
     >
       <ambientLight intensity={0.25} />
@@ -48,19 +54,12 @@ export const App = () => {
         iterations={10}
       >
         <Pointer radius={3} />
-        <Clump objectCount={params.objectCount} mass={params.mass} />
+        <ClumpObj count={params.objectCount} mass={params.mass} />
       </Physics>
       <Environment files="/adamsbridge.hdr" />
-      <Effects />
+      <Stats />
     </Canvas>
   );
 };
 
-function Effects(props) {
-  const { size, scene, camera } = useThree();
-  return (
-    <EffectComposer {...props}>
-      <sSAOPass args={[scene, camera, 100, 100]} kernelRadius={0.665} kernelSize={0} />
-    </EffectComposer>
-  );
-}
+export default App;

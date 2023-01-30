@@ -1,13 +1,13 @@
 import { useState } from "react";
 
-import { rebuildScene } from "./scenes/Scene";
+import { rebuildScene } from "./Scene";
 import { useParams } from "./Parameters";
 
-import { Accordion } from "./form/Accordion";
-import { ColoredLine } from "./form/Line";
-import { InlineGroup } from "./form/Group";
-import { IntInput } from "./form/IntInput";
-import { Button } from "./form/Button";
+import { Accordion } from "../../form/Accordion";
+import { ColoredLine } from "../../form/Line";
+import { InlineGroup } from "../../form/Group";
+import { IntInput } from "../../form/IntInput";
+import { Button } from "../../form/Button";
 
 export const Fields = () => {
 

@@ -1,8 +1,11 @@
 import { createRoot, unmount } from "react-dom/client";
-import { Suspense } from "react";
-import { App } from "../App2";
-
 import { useThree } from "@react-three/fiber";
+import { Suspense, lazy } from "react";
+
+import { CircleLoader } from "../../loaders/CircleLoader";
+
+const App = lazy(() => import('./App'));
+// import { App } from "./App";
 
 const domRoot = document.getElementById("root");
 var root = createRoot(domRoot);
@@ -10,7 +13,7 @@ var root = createRoot(domRoot);
 const Scene = () => {
   root.render(
     <>
-      <Suspense fallback={null}>
+      <Suspense fallback={<CircleLoader />}>
         <App />
       </Suspense>
     </>,
@@ -25,6 +28,20 @@ export const rebuildScene = (isNeedUnmount = false) => {
   Scene();
 };
 
+
+export const CircleLoaderComponent = () => {
+  return (
+    <>
+      <CircleLoader
+        meshColor={"#6366F1"}
+        lightColor={"#E0E7FF"}
+        duration={1.5}
+        desktopSize={"90px"}
+        mobileSize={"64px"}
+      />
+    </>
+  );
+};
 
 // const main = document.getElementById("main");
 

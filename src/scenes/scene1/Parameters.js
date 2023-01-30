@@ -1,4 +1,4 @@
-import { useLocalStorage, getStorageValue } from "./LocalStorage";
+import { useLocalStorage, getStorageValue } from "../../LocalStorage";
 
 const defaultParams = {
   objectCount: 4,
