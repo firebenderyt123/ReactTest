@@ -7,7 +7,7 @@ import { useTexture } from "@react-three/drei";
 const rfs = THREE.MathUtils.randFloatSpread;
 
 export const ClumpObj = ({ mat = new THREE.Matrix4(), vec = new THREE.Vector3(), mass = 1, count = 1 }) => {
-  
+
   const sphereGeometry = useMemo(() => new THREE.SphereGeometry(1, 32, 32), []);
   const baubleMaterial = useMemo(() => new THREE.MeshStandardMaterial({
     color: 0xff0033,
@@ -18,7 +18,7 @@ export const ClumpObj = ({ mat = new THREE.Matrix4(), vec = new THREE.Vector3(),
   const texture = useTexture("/cross.jpg");
   
   const [ref, api] = useSphere(() => ({ args: [1], mass: mass, angularDamping: 0.1, linearDamping: 0.65, position: [rfs(20), rfs(20), rfs(20)] }), useRef());
-    
+  
   useMemo(() => {
     for (let i = 0; i < count; i++) {
       api.at(i).mass.set(mass);

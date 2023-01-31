@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 import { Sidebar } from "./Sidebar";
 
-export default function HamburgerButton() {
+export default function Burger() {
   const [isShown, setIsShown] = useState(false);
   
   const handleClick = event => {
@@ -68,4 +68,4 @@ export default function HamburgerButton() {
       </motion.div>
     </div>
   );
-}
+};

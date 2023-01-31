@@ -1,11 +1,12 @@
 import { SidebarHeader } from "./SidebarHeader";
-import { Fields } from "./Fields";
+import { Menu } from "./Menu";
 
-export default function Sidebar() {
+export default function Sidebar({ children }) {
   return (
     <div id="sidebar">
       <SidebarHeader />
-      <Fields />
+      <Menu />
+      {/*{{...children}}*/}
     </div>
   );
 }

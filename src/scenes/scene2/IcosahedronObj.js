@@ -1,17 +1,19 @@
 import * as THREE from "three";
-import { useRef } from "react";
+import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 
 export const IcosahedronObj = () => {
   const ref = useRef();
-  const geom = new THREE.IcosahedronGeometry(7, 1);
-  const mat = new THREE.MeshPhongMaterial({
-    color: 0xffffff,
-    flatShading: true
-    // emissive: 0x999999,
-    // emissiveIntensity: 0,
-    // toneMapped: false
-  });
+  const geom = useMemo(() => new THREE.IcosahedronGeometry(11.2, 1), []);
+  const mat = useMemo(
+    () => new THREE.MeshPhongMaterial({
+      color: 0xffffff,
+      flatShading: true
+      // emissive: 0x999999,
+      // emissiveIntensity: 0,
+      // toneMapped: false
+    }), []
+  );
 
   useFrame((state, delta) => {
     ref.current.rotation.x += -delta * 0.2;
@@ -23,7 +25,6 @@ export const IcosahedronObj = () => {
       ref={ref}
       geometry={geom}
       material={mat}
-      scale={[16, 16, 16]}
     />
   );
 };

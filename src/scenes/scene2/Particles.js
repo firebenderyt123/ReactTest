@@ -2,19 +2,21 @@ import * as THREE from "three";
 import { useRef, useEffect, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 
+import { getMostSideLength } from "../../DeviceChecker";
+
 const maxCount = 2560;
 
-var mostSide = window.innerWidth > window.innerHeight ? window.innerWidth : window.innerHeight;
+var mostSide = getMostSideLength();
 if (mostSide < 768) {
   mostSide *= 1.5;
 }
 const particlesCount = mostSide < maxCount ? mostSide : maxCount;
 
-var particlesSize = 2;
+var particlesSize = 0.2;
 if (mostSide > 1920) {
-  particlesSize = 4;
+  particlesSize = 0.4;
 } else if (mostSide > 1440) {
-  particlesSize = 3;
+  particlesSize = 0.3;
 }
 
 const rfs = THREE.MathUtils.randFloatSpread;
@@ -36,9 +38,9 @@ export const Particles = ({ size = particlesSize, count = particlesCount }) => {
     const tempParticles = new THREE.Object3D();
     for (let i = 0; i < count; i++) {
       tempParticles.position.set(
-        rfs(mostSide),
-        rfs(mostSide),
-        rfs(mostSide)
+        rfs(mostSide * 0.1),
+        rfs(mostSide * 0.1),
+        rfs(mostSide * 0.1)
       );
       tempParticles.rotation.set(rfs(180), rfs(180), rfs(180));
       tempParticles.updateMatrix();

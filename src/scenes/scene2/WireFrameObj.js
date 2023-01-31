@@ -6,7 +6,7 @@ export const WireFrameObj = () => {
 
   const geom = useMemo(() => new THREE.IcosahedronGeometry(15, 1), []);
   const mat = useMemo(
-      () => new THREE.MeshPhongMaterial({
+    () => new THREE.MeshPhongMaterial({
       color: 0xffffff,
       wireframe: true,
       wireframeLinecap: "square",
@@ -31,7 +31,6 @@ export const WireFrameObj = () => {
         ref={ref}
         geometry={geom}
         material={mat}
-        scale={[10, 10, 10]}
       />
     </>
   );

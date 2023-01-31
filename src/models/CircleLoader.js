@@ -237,7 +237,9 @@ export const CircleLoader = ({
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      background: `${backgroundColor}`
+      background: `${backgroundColor}`,
+      width: "100%",
+      height: "100%"
     }}>
       <canvas className={className}></canvas>
     </div>

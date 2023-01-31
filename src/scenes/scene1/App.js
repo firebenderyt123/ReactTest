@@ -1,24 +1,28 @@
 import { ClumpObj } from "./ClumpObj";
 import { Pointer } from "./Pointer";
-import { getParams } from "./Parameters";
+import { CameraController } from "./CameraController";
+import { isMobile as isMob } from "../../DeviceChecker";
 import { useStats } from "../../Stats";
 
 import * as THREE from "three";
-import { Canvas, extend, useThree } from "@react-three/fiber";
+import { useState } from "react";
+import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/cannon";
-import { Environment } from "@react-three/drei";
+import { PerformanceMonitor, Environment } from "@react-three/drei";
+
+const isMobile = isMob();
 
 const Stats = () => useStats(0, true);
 
 const App = () => {
-  const params = getParams();
+  const [dpr, setDpr] = useState(1.5);
 
   return (
     <Canvas
       shadows
       className="app"
       frameloop="demand"
-      dpr={[1, 2]}
+      dpr={dpr}
       camera={{
         position: [0, 0, 20],
         fov: 35,
@@ -33,31 +37,32 @@ const App = () => {
         depth: true
       }}
     >
-      <ambientLight intensity={0.25} />
-      <spotLight
-        intensity={1}
-        angle={0.2}
-        penumbra={1}
-        position={[30, 30, 30]}
-        castShadow
-        shadow-mapSize={[512, 512]}
-      />
-      <directionalLight
-        intensity={5}
-        position={[-10, -10, -10]}
-        color="purple"
-      />
-      <Physics
-        gravity={
-          [params.gravityX, params.gravityY, params.gravityZ]
-        }
-        iterations={10}
-      >
-        <Pointer radius={3} />
-        <ClumpObj count={params.objectCount} mass={params.mass} />
-      </Physics>
-      <Environment files="/adamsbridge.hdr" />
-      <Stats />
+      <PerformanceMonitor onIncline={() => setDpr(2)} onDecline={() => setDpr(1)}>
+        <CameraController />
+        <ambientLight intensity={0.25} />
+        <spotLight
+          intensity={1}
+          angle={0.2}
+          penumbra={1}
+          position={[30, 30, 30]}
+          castShadow
+          shadow-mapSize={[512, 512]}
+        />
+        <directionalLight
+          intensity={5}
+          position={[-10, -10, -10]}
+          color="purple"
+        />
+        <Physics
+          gravity={[0, 2, 0]}
+          iterations={10}
+        >
+          <Pointer radius={3} />
+          <ClumpObj count={isMobile ? 4 : 20} mass={1} />
+        </Physics>
+        <Environment files="/adamsbridge.hdr" />
+        <Stats />
+      </PerformanceMonitor>
     </Canvas>
   );
 };
