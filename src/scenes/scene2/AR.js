@@ -1,64 +1,98 @@
 import * as THREE from "three";
-import { Suspense, useState, useMemo, useRef, useEffect } from 'react';
-import { XR, ARButton, Controllers, useHitTest, useXREvent } from '@react-three/xr';
+import { Suspense, useState, useMemo, createRef, useRef, useEffect, cloneElement } from 'react';
+import { XR, ARButton, Controllers, useHitTest, useXREvent, useXR, useInteraction } from '@react-three/xr';
 import { Text, Box } from '@react-three/drei';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 
 import { HeartObj } from "./HeartObj";
 import { WireFrameObj } from "./WireFrameObj";
 
+const limitObjects = 1;
+const offset = {x: 0, y: 0.175, z: 0};
 
-const HitTest = () => {
-  const ref = useRef();
-
-  // const circleGeometry = useMemo(() => new THREE.CircleGeometry(0.1, 32), []);
-  // const circleMaterial = useMemo(() => new THREE.MeshBasicMaterial({color: 0x6699ff}), []);
-  // const geometry = useMemo(() => new THREE.TorusGeometry( 0.06, 0.012, 2, 10 ), []);
-  // const material = useMemo(() => new THREE.MeshBasicMaterial( { color: 0x6688ff } ), []);
-  useHitTest((hit) => {
-    hit.decompose(ref.current.position, ref.current.rotation, ref.current.scale);
-    // console.log(hit.getPosition());
-  });
-
-  return (
-    <>
-    <group ref={ref}>
-      {/*<mesh
-        geometry={geometry}
-        material={material}
-        // rotation={[90, 0, 0]}
-      />*/}
-      <HeartObj
-        color={0x6688ff}
-        emissive={0x6688ff}
-        emissiveIntensity={1}
-        scaleKoef={0.0005}
-      />
-      <WireFrameObj
-        color={0x44aaff}
-        emissive={0x44aaff}
-        scale={[0.0005, 0.0005, 0.0005]}
-      />
-    </group>
-    </>
-  );
-};
-
-const onSelectEnd = (event) => {
-  console.log(event);
-
-  // console.log(obj);
-  // event.target.add(obj);
-
-};
-
-const Events = () => {
-  useXREvent('selectend', onSelectEnd);
-};
+const Obj = () => (
+  <group>
+    <HeartObj
+      emissive={0xff3366}
+      emissiveIntensity={1}
+      scaleKoef={0.0005}
+    />
+    <WireFrameObj
+      scale={[0.075, 0.075, 0.075]}
+    />
+  </group>
+);
 
 export const App = () => {
+  const [objects, setObjects] = useState([]);
 
-  useEffect(() => {console.log("render")});
+  const hitTestRef = useRef();
+  const geometryHitTest = useMemo(() => new THREE.TorusGeometry(0.062, 0.01, 2, 10), []);
+  const materialHitTest = useMemo(() => new THREE.MeshBasicMaterial({color: 0x6688ff}), []);
+
+  const HitTest = () => {
+
+    const objectsCount = objects.length;
+    if (objectsCount < limitObjects) {
+      useHitTest((hit) => {
+        hit.decompose(hitTestRef.current.position, hitTestRef.current.rotation, hitTestRef.current.scale);
+      });
+
+      return (
+        <>
+        <group ref={hitTestRef}>
+          <mesh
+            geometry={geometryHitTest}
+            material={materialHitTest}
+            rotation={[90, 0, 0]}
+            position={[0, -0.126, 0]}
+          />
+        </group>
+        </>
+      );
+    }
+
+    return <></>;
+  };
+
+  const addObject = () => {
+    const objectsCount = objects.length;
+
+    if (objectsCount < limitObjects) {
+      const hitPos = hitTestRef.current.position;
+      const ref = createRef();
+      const clonedElement = cloneElement(
+        Obj(),
+        {
+          ref: ref,
+          key: objectsCount,
+          position: [
+            hitPos.x + offset.x,
+            hitPos.y + offset.y,
+            hitPos.z + offset.z
+          ]
+        }
+      );
+      setObjects((prev) => [
+        ...prev,
+        clonedElement
+      ]);
+    }
+  };
+
+
+  const onSelect = (event) => {
+    addObject();
+  };
+
+  const Events = () => {
+    useXREvent('select', onSelect);
+
+    // objects.forEach((obj) => {
+    //   useInteraction(obj.ref, 'onMove', objOnSelectStart);
+    //   // useInteraction(obj.ref, 'onSelectEnd', objOnSelectEnd);
+    // });
+  };
 
   return (
     <>
@@ -83,20 +117,8 @@ export const App = () => {
             position={[-0.75, -1, 0.5]}
             color={0x8200C9}
           />
-          {/*<RayGrab>
-            <group position={[0.05, -0.1, -0.2]}>
-              <HeartObj
-                emissive={0xff3366}
-                emissiveIntensity={1}
-                scaleKoef={0.0005}
-              />
-              <WireFrameObj
-                scale={[0.0005, 0.0005, 0.0005]}
-              />
-            </group>
-          </RayGrab>*/}
+          {[...objects]}
           <HitTest />
-          {/*<Button position={[0, 0, 0]} />*/}
           <Controllers />
           <Events />
         </XR>
