@@ -11,22 +11,29 @@ const config = {
   tension: 100
 };
 
-export const HeartObj = () => {
+export const HeartObj = ({
+  color=0xff3366,
+  emissive=0xff0000,
+  emissiveIntensity=20,
+  position=[0, 0, 0],
+  rotation=[110, 0, 0],
+  scaleKoef=1
+}) => {
 
   const heartMat = useMemo(
     () => new THREE.MeshPhongMaterial({
-      color: 0xff3366,
+      color: color,
       flatShading: true,
-      emissive: 0xff0000,
-      emissiveIntensity: 20,
+      emissive: emissive,
+      emissiveIntensity: emissiveIntensity,
       toneMapped: false
-    }), []
+    }), [color, emissive, emissiveIntensity]
   );
 
   const [active, setActive] = useState(false);
   const [clicked, setClicked] = useState(false);
   const { scale } = useSpring({
-    scale: clicked ? (active ? 0.14 : 0.13) : (active ? 0.11 : 0.1),
+    scale: clicked ? (active ? 1.4 * scaleKoef : 1.3 * scaleKoef) : (active ? 1.1 * scaleKoef : 1 * scaleKoef),
     config: config
   });
 

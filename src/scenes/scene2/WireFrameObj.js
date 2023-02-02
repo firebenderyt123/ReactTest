@@ -2,20 +2,25 @@ import * as THREE from "three";
 import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 
-export const WireFrameObj = () => {
+export const WireFrameObj = ({
+  color=0xffffff,
+  emissive=0xffffff,
+  emissiveIntensity=2,
+  ...props
+}) => {
 
-  const geom = useMemo(() => new THREE.IcosahedronGeometry(15, 1), []);
+  const geom = useMemo(() => new THREE.IcosahedronGeometry(150, 1), []);
   const mat = useMemo(
     () => new THREE.MeshPhongMaterial({
-      color: 0xffffff,
+      color: color,
       wireframe: true,
       wireframeLinecap: "square",
       wireframeLinewidth: 2,
       side: THREE.DoubleSide,
-      emissive: 0xffffff,
-      emissiveIntensity: 2,
+      emissive: emissive,
+      emissiveIntensity: emissiveIntensity,
       toneMapped: false
-    }), []
+    }), [color, emissive, emissiveIntensity]
   );
 
   const ref = useRef();
@@ -31,6 +36,7 @@ export const WireFrameObj = () => {
         ref={ref}
         geometry={geom}
         material={mat}
+        {...props}
       />
     </>
   );

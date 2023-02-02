@@ -23,13 +23,13 @@ const App = () => {
   return (
     <Canvas
       className="app"
-      frameloop="demand"
+      // frameloop="demand"
       dpr={dpr}
       camera={{
-        position: [0, 0, 40],
+        position: [0, 0, 400],
         fov: 75,
         near: 1,
-        far: 100
+        far: 1000
       }}
       gl={{
         powerPreference: "high-performance",
@@ -41,13 +41,9 @@ const App = () => {
     >
       <Preload all />
       <AdaptiveDpr pixelated />
-      <PerformanceMonitor onIncline={() => setDpr(2)} onDecline={() => setDpr(1)}>
-        <CameraController />
-        <HeartObj />
-        {/*<IcosahedronObj />*/}
-        <WireFrameObj />
-        <Particles />
-        <Stats />
+      <CameraController />
+      <Stats />
+      <PerformanceMonitor flipflops={3} onFallback={() => {isMobile ? setDpr(.7) : setDpr(1); console.log(1);}}>
         {!isMobile
           ? <>
               <ambientLight color={0xff3366} intensity={2} />
@@ -66,10 +62,21 @@ const App = () => {
                 position={[-0.75, -1, 0.5]}
                 color={0x8200C9}
               />
+              <HeartObj />
+              <WireFrameObj />
               <Effects />
             </>
-          : <></>
+          : <>
+              <HeartObj
+                emissive={0xff3366}
+                emissiveIntensity={1}
+              />
+              <WireFrameObj
+                emissiveIntensity={1}
+              />
+            </>
         }
+        <Particles />
       </PerformanceMonitor>
     </Canvas>
   );

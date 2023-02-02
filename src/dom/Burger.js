@@ -4,20 +4,20 @@ import { motion } from "framer-motion";
 
 import { Sidebar } from "./Sidebar";
 
+const style = {
+  overflow: 'visible',
+  cursor: 'pointer',
+  // disable touch highlighting on devices
+  WebkitTapHighlightColor: "rgba(0,0,0,0)"
+};
+
 export default function Burger() {
   const [isShown, setIsShown] = useState(false);
-  
-  const handleClick = event => {
+
+  const handleClick = (event) => {
     const sidebar = document.getElementById('sidebar');
     setIsShown(current => !current);
     sidebar.classList.toggle('opened');
-  };
-
-  const style = {
-    overflow: 'visible',
-    cursor: 'pointer',
-    // disable touch highlighting on devices
-    WebkitTapHighlightColor: "rgba(0,0,0,0)"
   };
 
   return (

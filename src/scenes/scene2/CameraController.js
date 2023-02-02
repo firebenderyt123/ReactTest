@@ -7,8 +7,8 @@ export const CameraController = () => {
   const controls = useMemo(() => new OrbitControls(camera, gl.domElement), [camera, gl]);
   useEffect(
     () => {
-      controls.minDistance = 20;
-      controls.maxDistance = 60;
+      controls.minDistance = 200;
+      controls.maxDistance = 600;
       controls.enablePan = false;
       controls.rotateSpeed = .5;
       return () => {

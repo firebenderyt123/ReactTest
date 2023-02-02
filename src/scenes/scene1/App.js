@@ -8,7 +8,7 @@ import * as THREE from "three";
 import { useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/cannon";
-import { PerformanceMonitor, Environment } from "@react-three/drei";
+import { Preload, PerformanceMonitor, AdaptiveDpr, Environment } from "@react-three/drei";
 
 const isMobile = isMob();
 
@@ -21,7 +21,7 @@ const App = () => {
     <Canvas
       shadows
       className="app"
-      frameloop="demand"
+      // frameloop="demand"
       dpr={dpr}
       camera={{
         position: [0, 0, 20],
@@ -37,6 +37,8 @@ const App = () => {
         depth: true
       }}
     >
+      <Preload all />
+      <AdaptiveDpr pixelated />
       <PerformanceMonitor onIncline={() => setDpr(2)} onDecline={() => setDpr(1)}>
         <CameraController />
         <ambientLight intensity={0.25} />

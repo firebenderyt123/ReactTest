@@ -12,11 +12,11 @@ if (mostSide < 768) {
 }
 const particlesCount = mostSide < maxCount ? mostSide : maxCount;
 
-var particlesSize = 0.2;
+var particlesSize = 2;
 if (mostSide > 1920) {
-  particlesSize = 0.4;
+  particlesSize = 4;
 } else if (mostSide > 1440) {
-  particlesSize = 0.3;
+  particlesSize = 3;
 }
 
 const rfs = THREE.MathUtils.randFloatSpread;
@@ -38,9 +38,9 @@ export const Particles = ({ size = particlesSize, count = particlesCount }) => {
     const tempParticles = new THREE.Object3D();
     for (let i = 0; i < count; i++) {
       tempParticles.position.set(
-        rfs(mostSide * 0.1),
-        rfs(mostSide * 0.1),
-        rfs(mostSide * 0.1)
+        rfs(mostSide),
+        rfs(mostSide),
+        rfs(mostSide)
       );
       tempParticles.rotation.set(rfs(180), rfs(180), rfs(180));
       tempParticles.updateMatrix();
