@@ -33,9 +33,12 @@ body,
   background: linear-gradient(to bottom,  #11e8bb 0%,#8200c9 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#11e8bb', endColorstr='#8200c9',GradientType=0 );
 }
-#root>.container>div:has(.loader) {
+.loader {
   width: 100vw;
   height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   z-index: 10000000000;
 }
 

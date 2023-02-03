@@ -27,8 +27,8 @@ const App = () => {
   const [objects, setObjects] = useState([]);
 
   const hitTestRef = useRef();
-  const geometryHitTest = useMemo(() => new THREE.TorusGeometry(0.062, 0.01, 2, 10), []);
-  const materialHitTest = useMemo(() => new THREE.MeshBasicMaterial({color: 0x6688ff}), []);
+  const geometryHitTest = useMemo(() => new THREE.TorusGeometry(0.062, 0.01, 2, 100), []);
+  const materialHitTest = useMemo(() => new THREE.MeshBasicMaterial({color: 0xFF88DD}), []);
 
   const HitTest = () => {
 
@@ -94,12 +94,6 @@ const App = () => {
     <>
       <Canvas
         className="AR-preview"
-        camera={{
-          position: [0, 0, 400],
-          fov: 75,
-          near: 1,
-          far: 1000
-        }}
         gl={{
           powerPreference: "high-performance",
           alpha: true,

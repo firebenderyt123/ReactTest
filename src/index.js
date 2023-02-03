@@ -6,7 +6,7 @@ import { createRoot, unmount } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Suspense, lazy } from "react";
 
-import { CircleLoader } from "./loaders/CircleLoader";
+import Loader from "./loaders/PuffLoader";
 const App_1 = lazy(() => import('./scenes/scene1/App'));
 const App_2 = lazy(() => import('./scenes/scene2/App'));
 
@@ -14,7 +14,7 @@ import "./css/styles.css";
 
 export default function App() {
   return (
-    <Suspense fallback={<CircleLoader />}>
+    <Suspense fallback={<Loader />}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={
