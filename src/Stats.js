@@ -39,18 +39,18 @@ export class CustomStats extends Stats {
 };
 
 export const useStats = (num = 0, isEnabled = true) => {
-  const stats = useMemo(() => new Stats(), []);
-  useEffect(() => {
-    if (isEnabled) {
+  if (isEnabled) {
+    const stats = useMemo(() => new Stats(), []);
+    useEffect(() => {
       stats.showPanel(num);
       stats.dom.style.left = "auto";
       stats.dom.style.right = 0;
       document.body.appendChild(stats.dom);
-    }
-  });
+    });
 
-  useFrame(() => {
-    stats.begin();
-    stats.end();
-  });
+    useFrame(() => {
+      stats.begin();
+      stats.end();
+    });
+  }
 };

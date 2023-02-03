@@ -13,7 +13,7 @@ import { CameraController } from "./CameraController";
 
 const isMobile = isMob();
 
-const Stats = () => useStats(0, true);
+const Stats = () => useStats(0, false);
 
 const Scene3D = () => (
   <Canvas

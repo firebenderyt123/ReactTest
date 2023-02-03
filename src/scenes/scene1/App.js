@@ -12,7 +12,7 @@ import { Preload, PerformanceMonitor, AdaptiveDpr, Environment } from "@react-th
 
 const isMobile = isMob();
 
-const Stats = () => useStats(0, true);
+const Stats = () => useStats(0, false);
 
 const App = () => {
   const [dpr, setDpr] = useState(1.5);
