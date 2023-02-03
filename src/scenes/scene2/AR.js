@@ -1,8 +1,8 @@
 import * as THREE from "three";
-import { Suspense, useState, useMemo, createRef, useRef, useEffect, cloneElement } from 'react';
-import { XR, ARButton, Controllers, useHitTest, useXREvent, useXR, useInteraction } from '@react-three/xr';
-import { Text, Box } from '@react-three/drei';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { useState, useMemo, useRef, cloneElement } from 'react';
+import { AdaptiveDpr } from '@react-three/drei';
+import { XR, ARButton, Controllers, useHitTest, useXREvent } from '@react-three/xr';
+import { Canvas } from '@react-three/fiber';
 
 import { HeartObj } from "./HeartObj";
 import { WireFrameObj } from "./WireFrameObj";
@@ -23,7 +23,7 @@ const Obj = () => (
   </group>
 );
 
-export const App = () => {
+const App = () => {
   const [objects, setObjects] = useState([]);
 
   const hitTestRef = useRef();
@@ -60,11 +60,9 @@ export const App = () => {
 
     if (objectsCount < limitObjects) {
       const hitPos = hitTestRef.current.position;
-      const ref = createRef();
       const clonedElement = cloneElement(
         Obj(),
         {
-          ref: ref,
           key: objectsCount,
           position: [
             hitPos.x + offset.x,
@@ -80,26 +78,49 @@ export const App = () => {
     }
   };
 
-
   const onSelect = (event) => {
     addObject();
   };
 
   const Events = () => {
     useXREvent('select', onSelect);
+  };
 
-    // objects.forEach((obj) => {
-    //   useInteraction(obj.ref, 'onMove', objOnSelectStart);
-    //   // useInteraction(obj.ref, 'onSelectEnd', objOnSelectEnd);
-    // });
+  const onSessionEnd = (event) => {
+    setObjects([]);
   };
 
   return (
     <>
-      <ARButton />
-      <Canvas>
+      <ARButton className={`AR-btn`}>
+        {
+          (status) => status == "unsupported"
+          ? <div className="XR-start">AR is unsupported</div>
+          : status == "exited"
+            ? <div className="XR-start">Try AR</div>
+            : <div className="XR-stop">Exit</div>
+        }
+      </ARButton>
+      <Canvas
+        className="AR-preview"
+        camera={{
+          position: [0, 0, 400],
+          fov: 75,
+          near: 1,
+          far: 1000
+        }}
+        gl={{
+          powerPreference: "high-performance",
+          alpha: true,
+          antialias: true,
+          stencil: false,
+          depth: true
+        }}
+      >
+        <AdaptiveDpr pixelated />
         <XR
           referenceSpace="local"
+          onSessionEnd={onSessionEnd}
         >
           <ambientLight color={0xff3366} intensity={2} />
           <directionalLight
@@ -126,3 +147,5 @@ export const App = () => {
     </>
   );
 };
+
+export default App;

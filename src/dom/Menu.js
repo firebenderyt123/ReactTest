@@ -23,12 +23,12 @@ export const Menu = () => {
           <MenuButton
             title={"Scene 1"}
             className={"scene-1-btn"}
-            href={"scene_1"}
+            href={"scene1"}
           />
           <MenuButton
             title={"Scene 2"}
             className={"scene-2-btn"}
-            href={"scene_2"}
+            href={"scene2"}
           />
         </Accordion>
       </div>
