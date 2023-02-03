@@ -155,6 +155,25 @@ a {
   line-height: 23px;
 }
 
+.XR-mode > * {
+  display: none!important;
+}
+.AR-preview,
+.AR-btn {
+  display: block!important;
+}
+.AR-btn {
+  padding: 0!important;
+  border: none!important;
+}
+.XR-start,
+.XR-stop {
+  width: 100%;
+  padding: 12px 24px;
+  border: 1px solid white;
+  border-radius: 4px;
+}
+
 @media screen and (max-width: 568px) {
   .full {
     visibility: hidden;

@@ -92,15 +92,6 @@ const App = () => {
 
   return (
     <>
-      <ARButton className={`AR-btn`}>
-        {
-          (status) => status == "unsupported"
-          ? <div className="XR-start">AR is unsupported</div>
-          : status == "exited"
-            ? <div className="XR-start">Try AR</div>
-            : <div className="XR-stop">Exit</div>
-        }
-      </ARButton>
       <Canvas
         className="AR-preview"
         camera={{
