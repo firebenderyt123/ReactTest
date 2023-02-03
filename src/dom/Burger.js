@@ -6,7 +6,7 @@ import { Sidebar } from "./Sidebar";
 
 const style = {
   overflow: 'visible',
-  cursor: 'pointer',
+  cursor: "var(--cursorPointer)",
   // disable touch highlighting on devices
   WebkitTapHighlightColor: "rgba(0,0,0,0)"
 };

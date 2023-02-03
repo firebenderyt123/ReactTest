@@ -10,18 +10,19 @@ export const MenuButton = ({title="Page", className="page", href="#"}) => {
       className={`menu-btn ${className}`}
     >
       <Link to={href}>
-        <motion.h3
+        <motion.span
           to={href}
           animate={{
-            backgroundColor: isHover ? "#4466ff" : "#ffdd00",
-            color: isHover ? "#fff" : "#333",
-            boxShadow: isHover ? "#4ba4ff80 -5px 5px 0px 0px" : "#fffa00ad 0px 5px 20px 0px, #0000001a 0px 5px 5px 0px",
+            backgroundColor: isHover ? "#ffdd00" : "#4466ff",
+            color: isHover ? "#333" : "#fff",
+            boxShadow: isHover ? "#fffa00ad 0px 5px 20px 0px, #0000001a 0px 5px 5px 0px" : "#4ba4ff80 -5px 5px 0px 0px"
           }}
+          transition={{ duration: 0.2 }}
           onHoverStart={() => setIsHover(true)}
           onHoverEnd={() => setIsHover(false)}
         >
         {title}
-        </motion.h3>
+        </motion.span>
       </Link>
     </motion.div>
   );

@@ -14,10 +14,10 @@ export const Accordion = ({ i, expanded, setExpanded, title, children }) => {
       <motion.h3
         initial={false}
         animate={{
-          backgroundColor: isHover || isOpen ? "#4466ff" : "#ffdd00",
+          backgroundColor: isHover || isOpen ? "#ffdd00" : "#4466ff",
           // backgroundColor: isOpen ? "#ffdd00" : "#0055FF",
-          color: isHover || isOpen ? "#fff" : "#333",
-          boxShadow: isHover || isOpen ? "#86868640 0px 5px 5px 0px" : "#fffa00ad 0px 5px 20px 0px, #0000001a 0px 5px 5px 0px",
+          color: isHover || isOpen ? "#333" : "#fff",
+          boxShadow: isHover || isOpen ? "#fffa00ad 0px 5px 20px 0px, #0000001a 0px 5px 5px 0px" : "#86868640 0px 5px 5px 0px",
           // fontSize: isHover ? "1.27em" : "1.17em"
         }}
         onHoverStart={() => setIsHover(true)}

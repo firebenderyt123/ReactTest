@@ -1,8 +1,6 @@
 import { Suspense, lazy, useState, useEffect } from "react";
 import { ARButton } from '@react-three/xr';
 
-import Loader from "../../loaders/PuffLoader";
-
 import Scene3D from './Scene3D';
 import AR from './AR';
 
