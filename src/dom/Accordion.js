@@ -17,7 +17,7 @@ export const Accordion = ({ i, expanded, setExpanded, title, children }) => {
           backgroundColor: isHover || isOpen ? "#ffdd00" : "#4466ff",
           // backgroundColor: isOpen ? "#ffdd00" : "#0055FF",
           color: isHover || isOpen ? "#333" : "#fff",
-          boxShadow: isHover || isOpen ? "#fffa00ad 0px 5px 20px 0px, #0000001a 0px 5px 5px 0px" : "#86868640 0px 5px 5px 0px",
+          boxShadow: isHover || isOpen ? "#fffa00ad 0px 5px 20px 0px, #0000001a 0px 5px 5px 0px" : "#4ba4ff80 -5px 5px 0px 0px",
           // fontSize: isHover ? "1.27em" : "1.17em"
         }}
         onHoverStart={() => setIsHover(true)}

@@ -10,7 +10,7 @@ export const Menu = () => {
     <>
       <div id={"menu"}>
         <MenuButton
-          title={"Home Page"}
+          title={"Home"}
           className={"home-btn"}
           href={"/"}
         />
