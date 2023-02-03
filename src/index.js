@@ -1,9 +1,44 @@
-// Original: https://dribbble.com/shots/5708399-Christmas-Collisions
-// By: 𝔅𝔢𝔰𝔱𝔖𝔢𝔯𝔳𝔢𝔡𝔅𝔬𝔩𝔡 @bstsrvdbld
+import Burger from "./dom/Burger";
+import Sidebar from "./dom/Sidebar";
 
-import { Scene } from "./Scene";
-import { Dom } from "./Dom";
+import { Outlet } from "react-router-dom";
+import { createRoot, unmount } from "react-dom/client";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Suspense, lazy } from "react";
+
+import Loader from "./loaders/PuffLoader";
+const App_1 = lazy(() => import('./scenes/scene1/App'));
+const App_2 = lazy(() => import('./scenes/scene2/App'));
+
 import "./css/styles.css";
 
-Scene();
-Dom();
+export default function App() {
+  return (
+    <Suspense fallback={<Loader />}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={
+            <>
+              <div className="container">
+                <Burger />
+                <Sidebar />
+                <noscript>
+                  You need to enable JavaScript to run this app.
+                </noscript>
+                <Outlet />
+              </div>
+            </>
+          }>
+            <Route index element={<App_1 />} />
+            <Route path="scene1" element={<App_1 />} />
+            <Route path="scene2" element={<App_2 />} />
+            <Route path="*" element={<App_2 />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </Suspense>
+  );
+}
+
+const root = createRoot(document.getElementById('root'));
+root.render(<App />);
