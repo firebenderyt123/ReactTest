@@ -1,4 +1,4 @@
-import { Suspense, lazy, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { ARButton } from '@react-three/xr';
 
 import Scene3D from './Scene3D';

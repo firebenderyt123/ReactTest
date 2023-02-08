@@ -6,20 +6,23 @@
   "main": "src/index.js",
   "dependencies": {
     "@react-spring/three": "^9.6.1",
-    "@react-three/cannon": "6.3.0",
-    "@react-three/drei": "^9.56.10",
-    "@react-three/fiber": "^8.0.13",
+    "@react-three/cannon": "^6.5.2",
+    "@react-three/drei": "^9.56.18",
+    "@react-three/fiber": "^8.11.0",
     "@react-three/postprocessing": "^2.7.0",
-    "@react-three/xr": "^5.1.3",
-    "react": "18.1.0",
-    "react-dom": "18.1.0",
-    "react-router-dom": "^6.8.0",
-    "react-scripts": "5.0.1",
-    "react-spinners": "^0.13.8",
-    "stats.js": "^0.17.0",
-    "three": "^0.140.0",
+    "@react-three/xr": "^5.2.0",
+    "@types/three": "^0.143.2",
     "framer-motion": "^8.5.2",
-    "react-motion": "^0.5.2"
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-motion": "0.5.2",
+    "react-router-dom": "6.8.0",
+    "react-spinners": "0.13.8",
+    "stats.js": "^0.17.0",
+    "three": "^0.143.0"
+  },
+  "devDependencies": {
+    "react-scripts": "5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
