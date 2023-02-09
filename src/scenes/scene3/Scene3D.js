@@ -5,6 +5,7 @@ import { Canvas } from "@react-three/fiber";
 import { Preload, AdaptiveDpr } from "@react-three/drei";
 
 import { Robot } from "../../models/Robot";
+import { CameraController } from "./CameraController";
 
 const isMobile = isMob();
 
@@ -30,21 +31,21 @@ const App = () => {
     >
       <Preload all />
       <AdaptiveDpr pixelated />
-      <ambientLight color={0xff3366} intensity={2} />
+      <CameraController />
       <directionalLight
-        intensity={2}
-        position={[1, 0, 0]}
+        intensity={1}
+        position={[0, -100, 0]}
         color={0xffffff}
       />
       <directionalLight
         intensity={2}
         position={[0.75, 1, 0.5]}
-        color={0x11E8BB}
+        color={0xffffff}
       />
       <directionalLight
         intensity={2}
         position={[-0.75, -1, 0.5]}
-        color={0x8200C9}
+        color={0xffffff}
       />
       <Robot
         rotation={[-180, 0, 0]}
