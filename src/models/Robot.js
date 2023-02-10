@@ -7,20 +7,20 @@ const modelPath = "/robot.glb";
 export function Robot(props) {
   const group = useRef();
   const { nodes, materials, animations } = useGLTF(modelPath);
-  const { ref, actions, names, mixer } = useAnimations(animations, group);
+  const { ref, actions, mixer } = useAnimations(animations, group);
   const [index, setIndex] = useState(0);
+
+  const names = ["Hello"];
 
   useFrame((state, delta) => {
     mixer.update(delta);
   });
-  
+
   useEffect(() => {
-    if (actions) {
-      // Reset and fade in animation after an index has been changed
-      actions[names[index]].reset().fadeIn(0.5).play();
-      // In the clean-up phase, fade it out
-      return () => actions[names[index]].fadeOut(0.5);
-    }
+    // Reset and fade in animation after an index has been changed
+    actions[names[index]].reset().fadeIn(0.5).play();
+    // In the clean-up phase, fade it out
+    return () => actions[names[index]].fadeOut(0.5);
   }, [index, actions, names]);
 
   return (
@@ -47,22 +47,22 @@ export function Robot(props) {
             skeleton={nodes.head_1.skeleton}
           >
             <skinnedMesh
-              name="lefteye"
-              geometry={nodes.lefteye.geometry}
-              material={materials["EyeMaterial.001"]}
-              skeleton={nodes.lefteye.skeleton}
-            />
-            <skinnedMesh
               name="mouth"
               geometry={nodes.mouth.geometry}
               material={materials.MouthMaterial}
               skeleton={nodes.mouth.skeleton}
             />
             <skinnedMesh
-              name="righteye"
-              geometry={nodes.righteye.geometry}
+              name="lefteye_1"
+              geometry={nodes.lefteye_1.geometry}
+              material={materials["EyeMaterial.001"]}
+              skeleton={nodes.lefteye_1.skeleton}
+            />
+            <skinnedMesh
+              name="righteye_1"
+              geometry={nodes.righteye_1.geometry}
               material={materials.EyeMaterial}
-              skeleton={nodes.righteye.skeleton}
+              skeleton={nodes.righteye_1.skeleton}
             />
           </skinnedMesh>
         </group>

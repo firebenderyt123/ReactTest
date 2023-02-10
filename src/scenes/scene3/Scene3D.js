@@ -32,11 +32,7 @@ const App = () => {
       <Preload all />
       <AdaptiveDpr pixelated />
       <CameraController />
-      <directionalLight
-        intensity={1}
-        position={[0, -100, 0]}
-        color={0xffffff}
-      />
+      <ambientLight />
       <directionalLight
         intensity={2}
         position={[0.75, 1, 0.5]}
