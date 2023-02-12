@@ -8,7 +8,7 @@ export const CameraController = () => {
   useEffect(
     () => {
       controls.minDistance = 10;
-      controls.maxDistance = 100;
+      controls.maxDistance = 50;
       controls.enablePan = false;
       return () => {
         controls.dispose();

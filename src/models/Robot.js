@@ -10,7 +10,7 @@ export function Robot(props) {
   const { ref, actions, mixer } = useAnimations(animations, group);
   const [index, setIndex] = useState(0);
 
-  const names = ["Hello"];
+  const names = ["Init", "Hello"];
 
   useFrame((state, delta) => {
     mixer.update(delta);
@@ -18,28 +18,20 @@ export function Robot(props) {
 
   useEffect(() => {
     // Reset and fade in animation after an index has been changed
-    actions[names[index]].reset().fadeIn(0.5).play();
+    actions[names[index]].reset().fadeIn(0.5).setEffectiveTimeScale(2).play();
     // In the clean-up phase, fade it out
-    return () => actions[names[index]].fadeOut(0.5);
+    return () => actions[names[index]].fadeOut(0.5).stop();
   }, [index, actions, names]);
 
   return (
     <group ref={group} {...props} dispose={null}>
-      <group name="Scene">
+      <group name="Scene" onClick={() => setIndex((index + 1) % names.length)}>
         <group
-          onClick={() => setIndex((index + 1) % names.length)}
           name="Armature"
-          position={[0, 0, 30]}
           rotation={[-Math.PI/5, Math.PI, 0]}
         >
           <primitive object={nodes.head} />
           <primitive object={nodes.root006} />
-          <skinnedMesh
-            name="body"
-            geometry={nodes.body.geometry}
-            material={materials.BodyMaterial}
-            skeleton={nodes.body.skeleton}
-          />
           <skinnedMesh
             name="head_1"
             geometry={nodes.head_1.geometry}
@@ -53,18 +45,24 @@ export function Robot(props) {
               skeleton={nodes.mouth.skeleton}
             />
             <skinnedMesh
-              name="lefteye_1"
-              geometry={nodes.lefteye_1.geometry}
-              material={materials["EyeMaterial.001"]}
-              skeleton={nodes.lefteye_1.skeleton}
-            />
-            <skinnedMesh
               name="righteye_1"
               geometry={nodes.righteye_1.geometry}
               material={materials.EyeMaterial}
               skeleton={nodes.righteye_1.skeleton}
             />
+            <skinnedMesh
+              name="lefteye_1"
+              geometry={nodes.lefteye_1.geometry}
+              material={materials["EyeMaterial.001"]}
+              skeleton={nodes.lefteye_1.skeleton}
+            />
           </skinnedMesh>
+          <skinnedMesh
+            name="body"
+            geometry={nodes.body.geometry}
+            material={materials.BodyMaterial}
+            skeleton={nodes.body.skeleton}
+          />
         </group>
       </group>
     </group>
@@ -72,4 +70,3 @@ export function Robot(props) {
 }
 
 useGLTF.preload(modelPath);
-

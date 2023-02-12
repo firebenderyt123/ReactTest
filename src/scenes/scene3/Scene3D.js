@@ -19,7 +19,7 @@ const App = () => {
         position: [0, 0, 20],
         fov: 35,
         near: 1,
-        far: 40
+        far: 80
       }}
       gl={{
         powerPreference: "high-performance",
@@ -44,6 +44,7 @@ const App = () => {
         color={0xffffff}
       />
       <Robot
+        position={[0, -2, 0]}
         rotation={[-180, 0, 0]}
         scale={[0.1, 0.1, 0.1]}
       />
