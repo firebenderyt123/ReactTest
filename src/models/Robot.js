@@ -10,28 +10,44 @@ export function Robot(props) {
   const { ref, actions, mixer } = useAnimations(animations, group);
   const [index, setIndex] = useState(0);
 
-  const names = ["Init", "Hello"];
+  const names = ["Init", "Hello", "Salto"];
 
   useFrame((state, delta) => {
     mixer.update(delta);
   });
 
   useEffect(() => {
+    console.log(actions);
+    const anim = actions[names[index]].reset().fadeIn(0.5);
+
+    if (names[index] == "Hello") {
+      anim.setEffectiveTimeScale(2);
+    } else if (names[index] == "Salto") {
+      anim.setEffectiveTimeScale(2);
+    }
+    anim.play();
+
     // Reset and fade in animation after an index has been changed
-    actions[names[index]].reset().fadeIn(0.5).setEffectiveTimeScale(2).play();
+    // actions[names[index]].reset().fadeIn(0.5).setEffectiveTimeScale(2).play();
     // In the clean-up phase, fade it out
-    return () => actions[names[index]].fadeOut(0.5).stop();
+    return () => actions[names[index]].fadeOut(0.5);
   }, [index, actions, names]);
 
   return (
     <group ref={group} {...props} dispose={null}>
-      <group name="Scene" onClick={() => setIndex((index + 1) % names.length)}>
+      <group name="Scene">
         <group
           name="Armature"
           rotation={[-Math.PI/5, Math.PI, 0]}
+          onClick={() => setIndex((index + 1) % names.length)}
         >
-          <primitive object={nodes.head} />
           <primitive object={nodes.root006} />
+          <skinnedMesh
+            name="body"
+            geometry={nodes.body.geometry}
+            material={materials.BodyMaterial}
+            skeleton={nodes.body.skeleton}
+          />
           <skinnedMesh
             name="head_1"
             geometry={nodes.head_1.geometry}
@@ -57,12 +73,6 @@ export function Robot(props) {
               skeleton={nodes.lefteye_1.skeleton}
             />
           </skinnedMesh>
-          <skinnedMesh
-            name="body"
-            geometry={nodes.body.geometry}
-            material={materials.BodyMaterial}
-            skeleton={nodes.body.skeleton}
-          />
         </group>
       </group>
     </group>
