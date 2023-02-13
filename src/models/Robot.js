@@ -10,7 +10,9 @@ export function Robot(props) {
   const { ref, actions, mixer } = useAnimations(animations, group);
   const [index, setIndex] = useState(0);
 
-  const names = ["Init", "Hello", "Salto"];
+  const names = ["Init", "Hello", "Salto", "Kiss"];
+
+  console.log(animations);
 
   useFrame((state, delta) => {
     mixer.update(delta);
@@ -43,6 +45,12 @@ export function Robot(props) {
         >
           <primitive object={nodes.root006} />
           <skinnedMesh
+            name="Heart"
+            geometry={nodes.Heart.geometry}
+            material={materials.HeartMaterial}
+            skeleton={nodes.Heart.skeleton}
+          />
+          <skinnedMesh
             name="body"
             geometry={nodes.body.geometry}
             material={materials.BodyMaterial}
@@ -55,6 +63,12 @@ export function Robot(props) {
             skeleton={nodes.head_1.skeleton}
           >
             <skinnedMesh
+              name="lefteye_1"
+              geometry={nodes.lefteye_1.geometry}
+              material={materials["EyeMaterial.001"]}
+              skeleton={nodes.lefteye_1.skeleton}
+            />
+            <skinnedMesh
               name="mouth"
               geometry={nodes.mouth.geometry}
               material={materials.MouthMaterial}
@@ -65,12 +79,6 @@ export function Robot(props) {
               geometry={nodes.righteye_1.geometry}
               material={materials.EyeMaterial}
               skeleton={nodes.righteye_1.skeleton}
-            />
-            <skinnedMesh
-              name="lefteye_1"
-              geometry={nodes.lefteye_1.geometry}
-              material={materials["EyeMaterial.001"]}
-              skeleton={nodes.lefteye_1.skeleton}
             />
           </skinnedMesh>
         </group>
