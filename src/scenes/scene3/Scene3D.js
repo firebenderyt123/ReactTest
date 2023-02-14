@@ -32,6 +32,7 @@ const App = () => {
       <Preload all />
       <AdaptiveDpr pixelated />
       <CameraController />
+      <Stats />
       <ambientLight />
       <directionalLight
         intensity={2}
@@ -40,7 +41,7 @@ const App = () => {
       />
       <directionalLight
         intensity={2}
-        position={[-0.75, -1, 0.5]}
+        position={[-7.5, -10, -2]}
         color={0xffffff}
       />
       <Robot

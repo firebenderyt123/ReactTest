@@ -12,14 +12,11 @@ export function Robot(props) {
 
   const names = ["Init", "Hello", "Salto", "Kiss"];
 
-  console.log(animations);
-
   useFrame((state, delta) => {
     mixer.update(delta);
   });
 
   useEffect(() => {
-    console.log(actions);
     const anim = actions[names[index]].reset().fadeIn(0.5);
 
     if (names[index] == "Hello") {
@@ -29,9 +26,6 @@ export function Robot(props) {
     }
     anim.play();
 
-    // Reset and fade in animation after an index has been changed
-    // actions[names[index]].reset().fadeIn(0.5).setEffectiveTimeScale(2).play();
-    // In the clean-up phase, fade it out
     return () => actions[names[index]].fadeOut(0.5);
   }, [index, actions, names]);
 
