@@ -10,7 +10,7 @@ export const Menu = () => {
     <>
       <div id={"menu"}>
         <MenuButton
-          title={"Home Page"}
+          title={"Home"}
           className={"home-btn"}
           href={"/"}
         />
@@ -21,14 +21,19 @@ export const Menu = () => {
           setExpanded={setAccordionExpanded}
         >
           <MenuButton
-            title={"Scene 1"}
+            title={"Balls"}
             className={"scene-1-btn"}
-            href={"scene1"}
+            href={"balls"}
           />
           <MenuButton
-            title={"Scene 2"}
+            title={"Heart"}
             className={"scene-2-btn"}
-            href={"scene2"}
+            href={"heart"}
+          />
+          <MenuButton
+            title={"Robot"}
+            className={"scene-3-btn"}
+            href={"robot"}
           />
         </Accordion>
       </div>

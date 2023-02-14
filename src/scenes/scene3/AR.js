@@ -4,23 +4,16 @@ import { AdaptiveDpr } from '@react-three/drei';
 import { XR, ARButton, Controllers, useHitTest, useXREvent, Interactive } from '@react-three/xr';
 import { Canvas } from '@react-three/fiber';
 
-import { HeartObj } from "./HeartObj";
-import { WireFrameObj } from "./WireFrameObj";
+import { Robot } from "../../models/Robot";
 
 const limitObjects = 1;
-const offset = {x: 0, y: 0.175, z: 0};
+const offset = {x: 0, y: 0.05, z: 0};
 
 const Obj = () => (
-  <group>
-    <HeartObj
-      emissive={0xff3366}
-      emissiveIntensity={1}
-      scaleKoef={0.0005}
-    />
-    <WireFrameObj
-      scale={[0.075, 0.075, 0.075]}
-    />
-  </group>
+  <Robot
+    rotation={[90, 0, 0]}
+    scale={[0.0025, 0.0025, 0.0025]}
+  />
 );
 
 const App = () => {
@@ -32,25 +25,22 @@ const App = () => {
 
   const HitTest = () => {
 
-    const objectsCount = objects.length;
-    if (objectsCount < limitObjects) {
-      useHitTest((hit) => {
-        hit.decompose(hitTestRef.current.position, hitTestRef.current.rotation, hitTestRef.current.scale);
-      });
+    useHitTest((hit) => {
+      hit.decompose(hitTestRef.current.position, hitTestRef.current.rotation, hitTestRef.current.scale);
+    });
 
-      return (
-        <>
-        <group ref={hitTestRef}>
-          <mesh
-            geometry={geometryHitTest}
-            material={materialHitTest}
-            rotation={[90, 0, 0]}
-            position={[0, -0.126, 0]}
-          />
-        </group>
-        </>
-      );
-    }
+    return (
+      <>
+      <group ref={hitTestRef}>
+        <mesh
+          geometry={geometryHitTest}
+          material={materialHitTest}
+          rotation={[90, 0, 0]}
+          position={[0, -0.126, 0]}
+        />
+      </group>
+      </>
+    );
 
     return <></>;
   };
@@ -91,7 +81,7 @@ const App = () => {
   };
 
   const objOnSelect = (event) => {
-    event.intersection.object.__r3f.parent.children[0].__r3f.handlers.onClick();
+    event.intersection.object.__r3f.handlers.onClick();
   };
 
   return (
@@ -117,21 +107,16 @@ const App = () => {
             ? <HitTest />
             : <></>
           }
-          <ambientLight color={0xff3366} intensity={2} />
+          <ambientLight />
           <directionalLight
             intensity={2}
-            position={[1, 0, 0]}
+            position={[0.75, 1, 0.5]}
             color={0xffffff}
           />
           <directionalLight
             intensity={2}
-            position={[0.75, 1, 0.5]}
-            color={0x11E8BB}
-          />
-          <directionalLight
-            intensity={2}
-            position={[-0.75, -1, 0.5]}
-            color={0x8200C9}
+            position={[-7.5, -10, -2]}
+            color={0xffffff}
           />
           {
             objects.length < limitObjects

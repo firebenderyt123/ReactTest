@@ -9,6 +9,7 @@ import { Suspense, lazy } from "react";
 import Loader from "./loaders/PuffLoader";
 const App_1 = lazy(() => import('./scenes/scene1/App'));
 const App_2 = lazy(() => import('./scenes/scene2/App'));
+const App_3 = lazy(() => import('./scenes/scene3/App'));
 
 import "./css/styles.css";
 
@@ -30,8 +31,9 @@ export default function App() {
             </>
           }>
             <Route index element={<App_1 />} />
-            <Route path="scene1" element={<App_1 />} />
-            <Route path="scene2" element={<App_2 />} />
+            <Route path="balls" element={<App_1 />} />
+            <Route path="heart" element={<App_2 />} />
+            <Route path="robot" element={<App_3 />} />
             <Route path="*" element={<App_2 />} />
           </Route>
         </Routes>
