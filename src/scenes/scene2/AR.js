@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { useState, useMemo, useRef, cloneElement } from 'react';
 import { AdaptiveDpr } from '@react-three/drei';
-import { XR, ARButton, Controllers, useHitTest, useXREvent } from '@react-three/xr';
+import { XR, ARButton, Controllers, useHitTest, useXREvent, Interactive } from '@react-three/xr';
 import { Canvas } from '@react-three/fiber';
 
 import { HeartObj } from "./HeartObj";
@@ -90,6 +90,10 @@ const App = () => {
     setObjects([]);
   };
 
+  const objOnSelect = (event) => {
+    event.intersection.object.__r3f.parent.children[0].__r3f.handlers.onClick();
+  };
+
   return (
     <>
       <Canvas
@@ -107,6 +111,12 @@ const App = () => {
           referenceSpace="local"
           onSessionEnd={onSessionEnd}
         >
+          <Controllers />
+          {
+            objects.length < limitObjects
+            ? <HitTest />
+            : <></>
+          }
           <ambientLight color={0xff3366} intensity={2} />
           <directionalLight
             intensity={2}
@@ -123,10 +133,16 @@ const App = () => {
             position={[-0.75, -1, 0.5]}
             color={0x8200C9}
           />
-          {[...objects]}
-          <HitTest />
-          <Controllers />
-          <Events />
+          {
+            objects.length < limitObjects
+            ? <>
+                {[...objects]}
+                <Events />
+              </>
+            : <Interactive onSelect={objOnSelect}>
+                {[...objects]}
+              </Interactive>
+          }
         </XR>
       </Canvas>
     </>

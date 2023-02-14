@@ -12,6 +12,10 @@ export function Robot(props) {
 
   const names = ["Init", "Hello", "Salto", "Kiss"];
 
+  const nextIndex = () => {
+    setIndex((index + 1) % names.length);
+  };
+
   useFrame((state, delta) => {
     mixer.update(delta);
   });
@@ -35,7 +39,6 @@ export function Robot(props) {
         <group
           name="Armature"
           rotation={[-Math.PI/5, Math.PI, 0]}
-          onClick={() => setIndex((index + 1) % names.length)}
         >
           <primitive object={nodes.root006} />
           <skinnedMesh
@@ -49,6 +52,7 @@ export function Robot(props) {
             geometry={nodes.body.geometry}
             material={materials.BodyMaterial}
             skeleton={nodes.body.skeleton}
+            onClick={nextIndex}
           />
           <skinnedMesh
             name="head_1"

@@ -4,8 +4,6 @@ import { ARButton } from '@react-three/xr';
 import Scene3D from './Scene3D';
 import AR from './AR';
 
-import Test from './Test';
-
 const App = () => {
   const [container, setContainer] = useState(null);
   const [loadScene, setLoadScene] = useState(<Scene3D />);
@@ -23,10 +21,6 @@ const App = () => {
     setLoadScene(<Scene3D />);
     container.classList.remove("XR-mode");
   };
-
-  // return (
-  //   <Test />
-  // );
 
   return (
     <>

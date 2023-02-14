@@ -1,24 +1,23 @@
 import * as THREE from "three";
 import { useState, useMemo, useRef, cloneElement } from 'react';
 import { AdaptiveDpr } from '@react-three/drei';
-import { XR, ARButton, Controllers, useHitTest, useXREvent } from '@react-three/xr';
+import { XR, ARButton, Controllers, useHitTest, useXREvent, Interactive } from '@react-three/xr';
 import { Canvas } from '@react-three/fiber';
 
 import { Robot } from "../../models/Robot";
 
 const limitObjects = 1;
-const offset = {x: 0, y: 0.175, z: 0};
+const offset = {x: 0, y: 0.05, z: 0};
 
 const Obj = () => (
   <Robot
     rotation={[90, 0, 0]}
-    scale={[0.001, 0.001, 0.001]}
+    scale={[0.0025, 0.0025, 0.0025]}
   />
 );
 
 const App = () => {
   const [objects, setObjects] = useState([]);
-  const [isUseEvents, setIsUseEvents] = useState(true);
 
   const hitTestRef = useRef();
   const geometryHitTest = useMemo(() => new THREE.TorusGeometry(0.062, 0.01, 2, 100), []);
@@ -26,25 +25,22 @@ const App = () => {
 
   const HitTest = () => {
 
-    const objectsCount = objects.length;
-    if (objectsCount < limitObjects) {
-      useHitTest((hit) => {
-        hit.decompose(hitTestRef.current.position, hitTestRef.current.rotation, hitTestRef.current.scale);
-      });
+    useHitTest((hit) => {
+      hit.decompose(hitTestRef.current.position, hitTestRef.current.rotation, hitTestRef.current.scale);
+    });
 
-      return (
-        <>
-        <group ref={hitTestRef}>
-          <mesh
-            geometry={geometryHitTest}
-            material={materialHitTest}
-            rotation={[90, 0, 0]}
-            position={[0, -0.126, 0]}
-          />
-        </group>
-        </>
-      );
-    }
+    return (
+      <>
+      <group ref={hitTestRef}>
+        <mesh
+          geometry={geometryHitTest}
+          material={materialHitTest}
+          rotation={[90, 0, 0]}
+          position={[0, -0.126, 0]}
+        />
+      </group>
+      </>
+    );
 
     return <></>;
   };
@@ -69,13 +65,10 @@ const App = () => {
         ...prev,
         clonedElement
       ]);
-    } else {
-      setIsUseEvents(false);
     }
   };
 
   const onSelect = (event) => {
-    console.log(event);
     addObject();
   };
 
@@ -85,6 +78,10 @@ const App = () => {
 
   const onSessionEnd = (event) => {
     setObjects([]);
+  };
+
+  const objOnSelect = (event) => {
+    event.intersection.object.__r3f.handlers.onClick();
   };
 
   return (
@@ -110,11 +107,6 @@ const App = () => {
             ? <HitTest />
             : <></>
           }
-          {
-            isUseEvents
-            ? <Events />
-            : <></>
-          }
           <ambientLight />
           <directionalLight
             intensity={2}
@@ -126,7 +118,16 @@ const App = () => {
             position={[-7.5, -10, -2]}
             color={0xffffff}
           />
-          {[...objects]}
+          {
+            objects.length < limitObjects
+            ? <>
+                {[...objects]}
+                <Events />
+              </>
+            : <Interactive onSelect={objOnSelect}>
+                {[...objects]}
+              </Interactive>
+          }
         </XR>
       </Canvas>
     </>
